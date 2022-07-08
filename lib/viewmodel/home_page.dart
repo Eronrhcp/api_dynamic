@@ -1,6 +1,6 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+
+import '../view/home_page_viewmodel.dart';
 
 class ListAPI extends StatefulWidget {
 
@@ -11,20 +11,7 @@ class ListAPI extends StatefulWidget {
 }
 
 class _ListAPIState extends State<ListAPI> {
-  final _apiURL =
-      'https://jsonplaceholder.typicode.com/users';
-
-  Future<List> loadUser() async {
-    final response = await http.get(Uri.parse(_apiURL));
-    var json = jsonDecode(response.body);
-
-    if (response.statusCode == 200) {
-      return jsonDecode(utf8.decode(response.bodyBytes));
-    } else {
-      throw Exception('Erro ao carregar dados do servidor');
-    }
-    return json;
-  }
+  final controller = HomePageViewModel();
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +23,7 @@ class _ListAPIState extends State<ListAPI> {
         children: [
           Expanded(
             child: FutureBuilder<List>(
-              future: loadUser(),
+              future: controller.loadUser(),
               builder: (context, snapshot) {
                 if (snapshot.hasError) {
                   return Center(

@@ -9,4 +9,5 @@ class PersonModel{
     required this.name,
     required this.username,
     required this.email});
+
 }
